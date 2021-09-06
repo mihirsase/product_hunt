@@ -22,7 +22,7 @@ class DB {
       join(await getDatabasesPath(), 'test.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE users(id INTEGER PRIMARY KEY, name TEXT, username TEXT,email TEXT)',
+          'CREATE TABLE posts(id INTEGER PRIMARY KEY, name TEXT, tagline TEXT,slug TEXT,day TEXT,created_at TEXT,user TEXT)',
         );
       },
       version: 1,

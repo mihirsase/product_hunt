@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:product_hunt/screens/initial_screen.dart';
-import 'package:product_hunt/services/pallete.dart';
 
 void main() {
   runApp(ProductHunt());
@@ -23,11 +22,6 @@ class _ProductHuntState extends State<ProductHunt> {
       title: 'Test App',
       themeMode: ThemeMode.dark,
       theme: ThemeData(
-        canvasColor: Pallete.black,
-        appBarTheme: AppBarTheme(
-          color: Pallete.black,
-          centerTitle: true,
-        ),
       ),
       debugShowCheckedModeBanner: false,
       builder: (context, widget) {

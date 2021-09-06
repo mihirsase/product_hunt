@@ -11,6 +11,7 @@ class APIRequester {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
+          options.headers["Authorization"] = "Bearer 0b-I-PseXIpjDG_dU7_q2549MI1JXGPjGDKZaffi5s8";
           return handler.next(options);
         },
         onResponse: (response, handler) {
