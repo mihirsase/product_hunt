@@ -47,9 +47,27 @@ class Post {
         ),
       );
 
+  factory Post.fromLocalMap(Map<String, dynamic> json) => new Post(
+        id: json["id"],
+        name: json["name"],
+        tagline: json["tagline"],
+        slug: json["slug"],
+        day: (json['day'] as String?)?.toDateTime(),
+        createdAt: (json['created_at'] as String?)?.toDateTime(),
+        user: User.fromLocalMap(
+          jsonDecode(json['user']) ?? {},
+        ),
+      );
+
   static List<Post> listFromMap(final List<dynamic> jsons) {
     return jsons.map<Post>((final dynamic json) {
       return Post.fromMap(json);
+    }).toList();
+  }
+
+  static List<Post> listFromLocalMap(final List<dynamic> jsons) {
+    return jsons.map<Post>((final dynamic json) {
+      return Post.fromLocalMap(json);
     }).toList();
   }
 }

@@ -14,7 +14,7 @@ class PostRepo {
       Response response =
           await APIRequester.instance.dio.get('https://api.producthunt.com/v1/posts');
       List<Post>? posts = Post.listFromMap(response.data['posts']);
-      await syncPosts(posts);
+      await _syncPosts(posts);
       return posts;
     } catch (e) {
       print(e);
@@ -22,7 +22,7 @@ class PostRepo {
     }
   }
 
-  Future<void> syncPosts(List<Post>? posts) async {
+  Future<void> _syncPosts(List<Post>? posts) async {
     final db = await DB.instance.database;
     await db.rawQuery('DELETE FROM posts;');
     final Batch batch = db.batch();
@@ -35,5 +35,16 @@ class PostRepo {
         );
       }
     batch.commit();
+  }
+
+  Future<List<Post>?> getPostsForTodayFromLocal() async {
+    try {
+      final db = await DB.instance.database;
+      final List<Map<String, dynamic>> data = await db.rawQuery('SELECT * FROM posts;');
+      return Post.listFromLocalMap(data);
+    }catch (e) {
+      print(e);
+      return null;
+    }
   }
 }

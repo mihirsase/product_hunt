@@ -30,4 +30,12 @@ class User{
     headline: json["headline"],
     imageUrl: json["image_url"]['100px'],
   );
+
+  factory User.fromLocalMap(Map<String, dynamic> json) => new User(
+    id: json["id"],
+    name: json["name"],
+    username: json["username"],
+    headline: json["headline"],
+    imageUrl: json["image_url"],
+  );
 }
