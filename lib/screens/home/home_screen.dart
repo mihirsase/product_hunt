@@ -4,6 +4,7 @@ import 'package:product_hunt/blocs/home/home_bloc.dart';
 import 'package:product_hunt/blocs/home/home_event.dart';
 import 'package:product_hunt/blocs/home/home_state.dart';
 import 'package:product_hunt/models/posts/post.dart';
+import 'package:product_hunt/services/wayfinder.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -46,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _body(final HomeState state) {
     if (state is HomeLoading) {
-      return CircularProgressIndicator();
+      return Center(child: CircularProgressIndicator());
     }
 
     return ListView(
@@ -73,6 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         ..._homeBloc.filteredList
             .map((final Post? post) => ListTile(
+                  onTap: () {
+                    if (post != null) Wayfinder.instance.comments(post: post);
+                  },
                   title: Text(
                     post?.name ?? '',
                   ),

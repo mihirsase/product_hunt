@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:product_hunt/models/posts/post.dart';
+import 'package:product_hunt/screens/home/comments/comments_screen.dart';
 import 'package:product_hunt/screens/home/home_screen.dart';
 
 class Wayfinder {
@@ -45,7 +47,7 @@ class Wayfinder {
   }) {
     _navigatorKey!.currentState!.pushAndRemoveUntil(
       materialPageRoute,
-          (final Route<dynamic> route) {
+      (final Route<dynamic> route) {
         return false;
       },
     );
@@ -56,7 +58,7 @@ class Wayfinder {
   }) {
     _navigatorKey!.currentState!.pushAndRemoveUntil(
       materialPageRoute,
-          (final Route<dynamic> route) {
+      (final Route<dynamic> route) {
         return route.isFirst;
       },
     );
@@ -69,6 +71,19 @@ class Wayfinder {
           return HomeScreen();
         },
         settings: RouteSettings(name: (HomeScreen).toString()),
+      ),
+    );
+  }
+
+  void comments({required Post post}) {
+    _push(
+      materialPageRoute: MaterialPageRoute(
+        builder: (final BuildContext _) {
+          return CommentsScreen(
+            post: post,
+          );
+        },
+        settings: RouteSettings(name: (CommentsScreen).toString()),
       ),
     );
   }
