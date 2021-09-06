@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_hunt/blocs/home/home_bloc.dart';
 import 'package:product_hunt/blocs/home/home_event.dart';
 import 'package:product_hunt/blocs/home/home_state.dart';
+import 'package:product_hunt/models/posts/post.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -50,7 +51,36 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return ListView(
       children: [
-
+        Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Search',
+                ),
+                onChanged: (final String value) {
+                  _homeBloc.add(SearchPosts(searchTerm: value));
+                },
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                _homeBloc.add(PickDate());
+              },
+              icon: Icon(Icons.calendar_today),
+            )
+          ],
+        ),
+        ..._homeBloc.filteredList
+            .map((final Post? post) => ListTile(
+                  title: Text(
+                    post?.name ?? '',
+                  ),
+                  subtitle: Text(
+                    post?.tagline ?? '',
+                  ),
+                ))
+            .toList(),
       ],
     );
   }
