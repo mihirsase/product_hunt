@@ -1,0 +1,36 @@
+name: product_hunt
+description: A new Flutter project.
+
+
+publish_to: 'none'
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.2
+
+  # Blocs
+  flutter_bloc: 7.0.0
+
+  # Persist data
+  sqflite: ^2.0.0+3
+
+  # Rest requests
+  dio: ^4.0.0
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# The following section is specific to Flutter.
+flutter:
+
+  uses-material-design: true
