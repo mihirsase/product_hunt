@@ -1,10 +1,10 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_hunt/blocs/home/home_event.dart';
 import 'package:product_hunt/blocs/home/home_state.dart';
 import 'package:product_hunt/models/posts/post.dart';
 import 'package:product_hunt/models/posts/post_repo.dart';
+import 'package:product_hunt/services/connectivity_service.dart';
 import 'package:product_hunt/services/wayfinder.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
@@ -19,8 +19,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event is LoadHome) {
       yield HomeLoading();
 
-      final ConnectivityResult connectivityResult = await (Connectivity().checkConnectivity());
-      if (connectivityResult == ConnectivityResult.none) {
+      if (ConnectivityService.instance.isConnected == false) {
         final List<Post>? _response = await PostRepo.instance.getPostsForTodayFromLocal();
         if (_response != null) {
           postList = _response;
@@ -51,8 +50,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield HomeLoaded();
     } else if (event is PickDate) {
       yield HomeLoading();
-      final ConnectivityResult connectivityResult = await (Connectivity().checkConnectivity());
-      if (connectivityResult != ConnectivityResult.none) {
+      if (ConnectivityService.instance.isConnected) {
         DateTime? selectedDate = await showDatePicker(
           context: Wayfinder.instance.context,
           initialDate: DateTime.now(),

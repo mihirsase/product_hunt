@@ -34,6 +34,9 @@ dependencies:
 
   # Search posts
   flutter_search_bar: 3.0.0-dev.1
+
+  # Redirect
+  url_launcher: ^6.0.10
   
 dev_dependencies:
   flutter_test:

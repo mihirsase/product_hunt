@@ -12,6 +12,10 @@ class Post {
   DateTime? day;
   DateTime? createdAt;
   User? user;
+  String? imageUrl;
+  int? votesCount;
+  int? commentsCount;
+  String? redirectUrl;
 
   Post({
     this.id,
@@ -21,6 +25,10 @@ class Post {
     this.day,
     this.createdAt,
     this.user,
+    this.imageUrl,
+    this.votesCount,
+    this.commentsCount,
+    this.redirectUrl,
   });
 
   Map<String, dynamic> toMap() {
@@ -32,6 +40,10 @@ class Post {
       'day': day?.toDate(),
       'created_at': createdAt?.toDate(),
       'user': jsonEncode(user?.toMap()),
+      'image_url': imageUrl,
+      'votes_count': votesCount,
+      'comments_count': commentsCount,
+      'redirect_url': redirectUrl,
     };
   }
 
@@ -45,6 +57,10 @@ class Post {
         user: User.fromMap(
           json['user'] ?? {},
         ),
+        imageUrl: json['thumbnail']['image_url'],
+        votesCount: json['votes_count'],
+        commentsCount: json['comments_count'],
+        redirectUrl: json['redirect_url'],
       );
 
   factory Post.fromLocalMap(Map<String, dynamic> json) => new Post(
@@ -57,6 +73,10 @@ class Post {
         user: User.fromLocalMap(
           jsonDecode(json['user']) ?? {},
         ),
+        imageUrl: json['image_url'],
+        votesCount: json['votes_count'],
+        commentsCount: json['comments_count'],
+        redirectUrl: json['redirect_url'],
       );
 
   static List<Post> listFromMap(final List<dynamic> jsons) {
