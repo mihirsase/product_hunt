@@ -9,8 +9,6 @@ class Pallete {
     return Color(0xFFA0A0A0);
   }
 
-
-
   static Color get white {
     return Color(0xFFFFFFFF);
   }
@@ -22,6 +20,4 @@ class Pallete {
   static Color get blue {
     return Color(0xFF40C4FF);
   }
-
-
 }
