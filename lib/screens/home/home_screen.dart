@@ -24,16 +24,20 @@ class _HomeScreenState extends State<HomeScreen> {
     _homeBloc = HomeBloc();
     _homeBloc.add(LoadHome());
     searchBar = SearchBar(
-        inBar: false,
-        setState: setState,
-        onSubmitted: print,
-        buildDefaultAppBar: _appbar,
-        onChanged: (final String? value) {
-          if (value != null) _homeBloc.add(SearchPosts(searchTerm: value));
-        },
-        onCleared: () {
-          _homeBloc.add(ClearSearch());
-        });
+      inBar: false,
+      setState: setState,
+      onSubmitted: print,
+      buildDefaultAppBar: _appbar,
+      onChanged: (final String? value) {
+        if (value != null) _homeBloc.add(SearchPosts(searchTerm: value));
+      },
+      onCleared: () {
+        _homeBloc.add(ClearSearch());
+      },
+      onClosed: () {
+        _homeBloc.add(ClearSearch());
+      },
+    );
     super.initState();
   }
 
