@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:product_hunt/blocs/home/home_bloc.dart';
 import 'package:product_hunt/blocs/home/home_event.dart';
 import 'package:product_hunt/blocs/home/home_state.dart';
@@ -16,11 +17,23 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late HomeBloc _homeBloc;
+  late SearchBar searchBar;
 
   @override
   void initState() {
     _homeBloc = HomeBloc();
     _homeBloc.add(LoadHome());
+    searchBar = SearchBar(
+        inBar: false,
+        setState: setState,
+        onSubmitted: print,
+        buildDefaultAppBar: _appbar,
+        onChanged: (final String? value) {
+          if (value != null) _homeBloc.add(SearchPosts(searchTerm: value));
+        },
+        onCleared: () {
+          _homeBloc.add(ClearSearch());
+        });
     super.initState();
   }
 
@@ -37,18 +50,30 @@ class _HomeScreenState extends State<HomeScreen> {
         ) {
           return Scaffold(
             body: _body(state),
-            appBar: AppBar(
-              title: Text(
-                'Posts',
-                style: TextStyle(
-                  color: Pallete.black,
-                ),
-              ),
-            ),
+            appBar: searchBar.build(context),
           );
         },
       ),
     );
+  }
+
+  AppBar _appbar(BuildContext context) {
+    return AppBar(
+        title: Text(
+          'Posts',
+          style: TextStyle(
+            color: Pallete.black,
+          ),
+        ),
+        actions: [
+          searchBar.getSearchAction(context),
+          IconButton(
+            onPressed: () {
+              _homeBloc.add(PickDate());
+            },
+            icon: Icon(Icons.calendar_today),
+          ),
+        ]);
   }
 
   Widget _body(final HomeState state) {
@@ -58,26 +83,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return ListView(
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Search',
-                ),
-                onChanged: (final String value) {
-                  _homeBloc.add(SearchPosts(searchTerm: value));
-                },
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                _homeBloc.add(PickDate());
-              },
-              icon: Icon(Icons.calendar_today),
-            )
-          ],
-        ),
         ..._homeBloc.filteredList
             .map((final Post? post) => ListTile(
                   onTap: () {

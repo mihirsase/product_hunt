@@ -2,6 +2,8 @@ abstract class HomeEvent {}
 
 class LoadHome extends HomeEvent {}
 
+class ClearSearch extends HomeEvent {}
+
 class SearchPosts extends HomeEvent {
   final String searchTerm;
 

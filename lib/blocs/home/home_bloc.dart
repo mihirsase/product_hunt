@@ -69,6 +69,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
       }
       yield HomeLoaded();
+    } else if (event is ClearSearch) {
+      filteredList = postList;
+
+      yield HomeLoaded();
     }
   }
 }

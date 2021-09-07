@@ -31,6 +31,9 @@ dependencies:
 
   # Check network
   connectivity_plus: ^1.1.0
+
+  # Search posts
+  flutter_search_bar: 3.0.0-dev.1
   
 dev_dependencies:
   flutter_test:

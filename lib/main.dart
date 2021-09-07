@@ -24,8 +24,10 @@ class _ProductHuntState extends State<ProductHunt> {
       themeMode: ThemeMode.dark,
       theme: ThemeData(
         appBarTheme: AppBarTheme(
-          backgroundColor: Pallete.white,
-        ),
+            backgroundColor: Pallete.white,
+            iconTheme: IconThemeData(
+              color: Pallete.black,
+            )),
       ),
       debugShowCheckedModeBanner: false,
       builder: (context, widget) {
