@@ -21,7 +21,7 @@ This is a flutter application for a demonstrating bloc pattern architecture alon
 - **.assets** : All external images and fonts are stored here 
 
 ## Unit Test
-Unit test for mock api call can be bound inside test/unit_test.dart .
+Unit test for mock api call can be found inside test/unit_test.dart .
 Use the command [flutter test] to run the test cases.
   
 ## Third party packages used in the project  
