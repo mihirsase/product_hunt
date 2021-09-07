@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:product_hunt/screens/initial_screen.dart';
 import 'package:product_hunt/services/pallete.dart';
@@ -30,12 +31,15 @@ class _ProductHuntState extends State<ProductHunt> {
             )),
       ),
       debugShowCheckedModeBanner: false,
+      navigatorObservers: [
+        BotToastNavigatorObserver(),
+      ],
       builder: (context, widget) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(
             textScaleFactor: 1.0,
           ),
-          child: widget!,
+          child: BotToastInit()(context, widget),
         );
       },
       home: InitialScreen(

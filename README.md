@@ -35,3 +35,4 @@ Use the command [flutter test] to run the test cases.
 - **dio** : Used for making REST API requests
 - **flutter_search_bar** : Used for filtering posts
 - **url_launcher** : Used to launch url on external browser
+- **bot_toast** : Used to display in-app notifications

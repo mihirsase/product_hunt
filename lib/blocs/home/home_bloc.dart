@@ -5,6 +5,7 @@ import 'package:product_hunt/blocs/home/home_state.dart';
 import 'package:product_hunt/models/posts/post.dart';
 import 'package:product_hunt/models/posts/post_repo.dart';
 import 'package:product_hunt/services/connectivity_service.dart';
+import 'package:product_hunt/services/notifier.dart';
 import 'package:product_hunt/services/wayfinder.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
@@ -65,6 +66,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             filteredList = _response;
           }
         }
+      } else {
+        Notifier.instance
+            .alert(title: 'Check your internet connection!', notifType: NotifType.negative);
       }
       yield HomeLoaded();
     } else if (event is ClearSearch) {

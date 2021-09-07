@@ -4,6 +4,8 @@ import 'package:product_hunt/blocs/home/comments/comments_state.dart';
 import 'package:product_hunt/models/comments/comment.dart';
 import 'package:product_hunt/models/comments/comment_repo.dart';
 import 'package:product_hunt/models/posts/post.dart';
+import 'package:product_hunt/services/connectivity_service.dart';
+import 'package:product_hunt/services/notifier.dart';
 
 class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
   final Post post;
@@ -29,6 +31,11 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
           commentList.addAll(_response);
           page++;
         }
+      }
+
+      if(await ConnectivityService.instance.isConnected == false){
+        Notifier.instance
+            .alert(title: 'Check your internet connection!', notifType: NotifType.negative);
       }
       yield CommentsLoaded();
     }

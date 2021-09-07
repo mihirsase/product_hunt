@@ -37,6 +37,9 @@ dependencies:
 
   # Redirect
   url_launcher: ^6.0.10
+
+  # In app notifications
+  bot_toast: ^4.0.1
   
 dev_dependencies:
   flutter_test:

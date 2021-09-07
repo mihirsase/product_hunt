@@ -95,6 +95,10 @@ class _CommentsScreenState extends State<CommentsScreen> {
           SizedBox(
             height: 12,
           ),
+          if (_commentsBloc.commentList.length == 0 && state is CommentsLoaded)
+            Center(
+              child: Text('No comments found'),
+            ),
           ..._commentsBloc.commentList.map((final Comment? comment) {
             if (comment != null) {
               return _commentTile(comment);
