@@ -38,7 +38,7 @@ class _InitialScreenState extends State<InitialScreen> {
       child: Scaffold(
         body: Container(
           child: Center(
-            child: CircularProgressIndicator(),
+            child: Image.asset('lib/assets/splash.png',width: 200,),
           ),
         ),
       ),

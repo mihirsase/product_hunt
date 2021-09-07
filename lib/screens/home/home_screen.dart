@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
   AppBar _appbar(BuildContext context) {
     return AppBar(
         title: Text(
-          'Posts',
+          'Products',
           style: TextStyle(
             color: Pallete.black,
           ),
@@ -91,115 +91,126 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      padding: EdgeInsets.symmetric(
+        horizontal: 8,
+      ),
       child: ListView(
         children: [
+          SizedBox(
+            height: 12,
+          ),
           ..._homeBloc.filteredList.map((final Post? post) {
             if (post != null) {
               return _postTile(post);
             }
             return SizedBox.shrink();
           }).toList(),
+          SizedBox(
+            height: 12,
+          ),
         ],
       ),
     );
   }
 
   Widget _postTile(final Post post) {
-    return Card(
-      elevation: 2,
-      child: Container(
-        padding: EdgeInsets.only(
-          left: 12,
-          right: 12,
-          bottom: 12,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: post.user?.imageUrl != null && ConnectivityService.instance.isConnected
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(50.0),
-                      child: Image.network(post.user!.imageUrl!),
-                    )
-                  : NoProfileAtom(),
-              title: Text(
-                post.user?.name ?? '',
-              ),
-              subtitle: Text(
-                post.createdAt?.toDateTime() ?? '',
-              ),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Text(
-              post.name ?? '',
-              style: TextStyle(color: Pallete.black, fontSize: 16),
-            ),
-            Text(
-              post.tagline ?? '',
-              style: TextStyle(color: Pallete.greyLight, fontSize: 14),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            if (post.imageUrl != null && ConnectivityService.instance.isConnected)
-              Image.network(
-                post.imageUrl!,
-                fit: BoxFit.fitWidth,
-              ),
-            SizedBox(
-              height: 18,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CountAtom(
-                  title: (post.votesCount?.toString() ?? '0') + ' votes',
-                  icon: Icon(
-                    Icons.favorite,
-                    color: Pallete.red,
-                  ),
+    return Padding(
+      padding: EdgeInsets.only(bottom: 12.0),
+      child: Card(
+        elevation: 2,
+        child: Container(
+          padding: EdgeInsets.only(
+            left: 12,
+            right: 12,
+            bottom: 12,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: post.user?.imageUrl != null && ConnectivityService.instance.isConnected
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(50.0),
+                        child: Image.network(post.user!.imageUrl!),
+                      )
+                    : NoProfileAtom(),
+                title: Text(
+                  post.user?.name ?? '',
                 ),
-                SizedBox(
-                  width: 12,
+                subtitle: Text(
+                  post.createdAt?.toDateTime() ?? '',
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Wayfinder.instance.comments(post: post);
-                  },
-                  child: CountAtom(
-                    title: (post.commentsCount?.toString() ?? '0') + ' comments',
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Text(
+                post.name ?? '',
+                style: TextStyle(color: Pallete.black, fontSize: 16),
+              ),
+              Text(
+                post.tagline ?? '',
+                style: TextStyle(color: Pallete.greyLight, fontSize: 14),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              if (post.imageUrl != null && ConnectivityService.instance.isConnected)
+                Image.network(
+                  post.imageUrl!,
+                  fit: BoxFit.fitWidth,
+                ),
+              SizedBox(
+                height: 18,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CountAtom(
+                    title: (post.votesCount?.toString() ?? '0') + ' votes',
                     icon: Icon(
-                      Icons.message,
-                      color: Pallete.greyLight,
+                      Icons.favorite,
+                      color: Pallete.red,
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 12,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    if (post.redirectUrl != null)
-                      launch(
-                        post.redirectUrl!,
-                      );
-                  },
-                  child: CountAtom(
-                    title: 'Open',
-                    icon: Icon(
-                      Icons.public,
-                      color: Pallete.blue,
+                  SizedBox(
+                    width: 12,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Wayfinder.instance.comments(post: post);
+                    },
+                    child: CountAtom(
+                      title: (post.commentsCount?.toString() ?? '0') + ' comments',
+                      icon: Icon(
+                        Icons.message,
+                        color: Pallete.greyLight,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            )
-          ],
+                  SizedBox(
+                    width: 12,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (post.redirectUrl != null)
+                        launch(
+                          post.redirectUrl!,
+                        );
+                    },
+                    child: CountAtom(
+                      title: 'Open',
+                      icon: Icon(
+                        Icons.public,
+                        color: Pallete.blue,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_hunt/blocs/home/comments/comments_bloc.dart';
 import 'package:product_hunt/blocs/home/comments/comments_event.dart';
 import 'package:product_hunt/blocs/home/comments/comments_state.dart';
+import 'package:product_hunt/components/atoms/no_profile_atom.dart';
 import 'package:product_hunt/models/comments/comment.dart';
 import 'package:product_hunt/models/posts/post.dart';
+import 'package:product_hunt/services/connectivity_service.dart';
 import 'package:product_hunt/services/pallete.dart';
-import 'package:product_hunt/services/wayfinder.dart';
+import 'package:product_hunt/extensions/date_time_extension.dart';
 
 class CommentsScreen extends StatefulWidget {
   final Post post;
@@ -75,14 +77,6 @@ class _CommentsScreenState extends State<CommentsScreen> {
 
   Widget get _appBar {
     return AppBar(
-      leading: IconButton(
-        icon: Icon(Icons.chevron_left),
-        color: Pallete.black,
-        iconSize: 38,
-        onPressed: () {
-          Wayfinder.instance.pop();
-        },
-      ),
       title: Text(
         'Comments',
         style: TextStyle(
@@ -93,21 +87,75 @@ class _CommentsScreenState extends State<CommentsScreen> {
   }
 
   Widget _body(final CommentsState state) {
-    return ListView(
-      controller: _controller,
-      children: [
-        ..._commentsBloc.commentList
-            .map(
-              (final Comment? comment) => ListTile(
-                title: Text(comment?.body ?? ''),
-              ),
-            )
-            .toList(),
-        if (state is CommentsLoading)
-          Center(
-            child: CircularProgressIndicator(),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      child: ListView(
+        controller: _controller,
+        children: [
+          SizedBox(
+            height: 12,
           ),
-      ],
+          ..._commentsBloc.commentList.map((final Comment? comment) {
+            if (comment != null) {
+              return _commentTile(comment);
+            }
+            return SizedBox.shrink();
+          }).toList(),
+          if (state is CommentsLoading)
+            Padding(
+              padding: EdgeInsets.all(24.0),
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          SizedBox(
+            height: 12,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _commentTile(final Comment comment) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 12.0),
+      child: Card(
+        elevation: 2,
+        child: Container(
+          padding: EdgeInsets.only(
+            left: 12,
+            right: 12,
+            bottom: 12,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: comment.user?.imageUrl != null && ConnectivityService.instance.isConnected
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(50.0),
+                        child: Image.network(comment.user!.imageUrl!),
+                      )
+                    : NoProfileAtom(),
+                title: Text(
+                  comment.user?.name ?? '',
+                ),
+                subtitle: Text(
+                  comment.createdAt?.toDateTime() ?? '',
+                ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Text(
+                comment.body ?? '',
+                style: TextStyle(color: Pallete.black, fontSize: 16),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -13,7 +13,7 @@ class CommentRepo {
   }) async {
     try {
       Response response = await APIRequester.instance.dio.get(
-          'https://api.producthunt.com/v1/comments?search[post_id]=$postId&page=$page&per_page=20&sort_by=created_at&order=desc');
+          'https://api.producthunt.com/v1/comments?search[post_id]=$postId&page=$page&per_page=8&sort_by=created_at&order=desc');
       return Comment.listFromMap(response.data['comments']);
     } catch (e) {
       print(e);
