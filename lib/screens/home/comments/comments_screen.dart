@@ -5,6 +5,8 @@ import 'package:product_hunt/blocs/home/comments/comments_event.dart';
 import 'package:product_hunt/blocs/home/comments/comments_state.dart';
 import 'package:product_hunt/models/comments/comment.dart';
 import 'package:product_hunt/models/posts/post.dart';
+import 'package:product_hunt/services/pallete.dart';
+import 'package:product_hunt/services/wayfinder.dart';
 
 class CommentsScreen extends StatefulWidget {
   final Post post;
@@ -73,8 +75,19 @@ class _CommentsScreenState extends State<CommentsScreen> {
 
   Widget get _appBar {
     return AppBar(
+      leading: IconButton(
+        icon: Icon(Icons.chevron_left),
+        color: Pallete.black,
+        iconSize: 38,
+        onPressed: () {
+          Wayfinder.instance.pop();
+        },
+      ),
       title: Text(
         'Comments',
+        style: TextStyle(
+          color: Pallete.black,
+        ),
       ),
     );
   }

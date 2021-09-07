@@ -4,6 +4,7 @@ import 'package:product_hunt/blocs/home/home_bloc.dart';
 import 'package:product_hunt/blocs/home/home_event.dart';
 import 'package:product_hunt/blocs/home/home_state.dart';
 import 'package:product_hunt/models/posts/post.dart';
+import 'package:product_hunt/services/pallete.dart';
 import 'package:product_hunt/services/wayfinder.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,7 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
           return Scaffold(
             body: _body(state),
             appBar: AppBar(
-              title: Text('Today\'s posts'),
+              title: Text(
+                'Posts',
+                style: TextStyle(
+                  color: Pallete.black,
+                ),
+              ),
             ),
           );
         },
