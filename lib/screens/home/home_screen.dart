@@ -99,6 +99,10 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(
             height: 12,
           ),
+          if (_homeBloc.filteredList.length == 0)
+            Center(
+              child: Text('No posts found'),
+            ),
           ..._homeBloc.filteredList.map((final Post? post) {
             if (post != null) {
               return _postTile(post);
