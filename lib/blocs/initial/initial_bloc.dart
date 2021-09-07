@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_hunt/blocs/initial/initial_event.dart';
-import 'package:product_hunt/services/connectivity_service.dart';
 import 'package:product_hunt/services/wayfinder.dart';
 
 class InitialBloc extends Bloc<InitialEvent, void> {
@@ -25,7 +24,6 @@ class InitialBloc extends Bloc<InitialEvent, void> {
           DeviceOrientation.portraitDown,
         ],
       );
-      await ConnectivityService.instance.init();
 
       await Future.delayed(Duration(seconds: 2));
       Wayfinder.instance.home();

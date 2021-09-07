@@ -1,6 +1,7 @@
 # Product Hunt  
   
 This is a flutter application for a demonstrating bloc pattern architecture along with usage of SQLITE.  
+
 ## APK Link 
 [Android apk download link](https://drive.google.com/file/d/1LXxTMXHN1ysdNi83PD2O7QedUN5X2XP1/view?usp=sharing)
 
@@ -20,8 +21,8 @@ This is a flutter application for a demonstrating bloc pattern architecture alon
 - **.assets** : All external images and fonts are stored here 
 
 ## Unit Test
-Unit test for mock api call can be bound inside test/unit_test.dart
-Use the command [flutter test] to run the test cases
+Unit test for mock api call can be bound inside test/unit_test.dart .
+Use the command [flutter test] to run the test cases.
   
 ## Third party packages used in the project  
   

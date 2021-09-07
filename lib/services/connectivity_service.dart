@@ -2,18 +2,21 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ConnectivityService {
   static final ConnectivityService instance = ConnectivityService._();
-  late final ConnectivityResult connectivityResult;
+  late Connectivity connectivity;
+  bool status = false;
 
-  ConnectivityService._();
-
-  Future init() async {
-    connectivityResult = await (Connectivity().checkConnectivity());
+  ConnectivityService._(){
+    connectivity = Connectivity();
   }
 
-  bool get isConnected {
+
+
+
+  Future<bool> get isConnected async {
+    final ConnectivityResult connectivityResult = await connectivity.checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
-      return false;
+      return status = false;
     }
-    return true;
+    return status = true;
   }
 }

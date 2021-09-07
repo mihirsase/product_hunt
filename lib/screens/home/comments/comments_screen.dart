@@ -132,7 +132,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
             children: [
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: comment.user?.imageUrl != null && ConnectivityService.instance.isConnected
+                leading: comment.user?.imageUrl != null && ConnectivityService.instance.status
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(50.0),
                         child: Image.network(comment.user!.imageUrl!),

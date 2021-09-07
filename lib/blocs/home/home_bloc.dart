@@ -19,7 +19,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event is LoadHome) {
       yield HomeLoading();
 
-      if (ConnectivityService.instance.isConnected == false) {
+      if (await ConnectivityService.instance.isConnected == false) {
         final List<Post>? _response = await PostRepo.instance.getPostsForTodayFromLocal();
         if (_response != null) {
           postList = _response;
@@ -50,7 +50,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield HomeLoaded();
     } else if (event is PickDate) {
       yield HomeLoading();
-      if (ConnectivityService.instance.isConnected) {
+      if (await ConnectivityService.instance.isConnected) {
         DateTime? selectedDate = await showDatePicker(
           context: Wayfinder.instance.context,
           initialDate: DateTime.now(),

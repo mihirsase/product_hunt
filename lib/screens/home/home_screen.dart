@@ -6,6 +6,7 @@ import 'package:product_hunt/blocs/home/home_event.dart';
 import 'package:product_hunt/blocs/home/home_state.dart';
 import 'package:product_hunt/components/atoms/count_atom.dart';
 import 'package:product_hunt/components/atoms/no_profile_atom.dart';
+import 'package:product_hunt/components/atoms/refresh_atom.dart';
 import 'package:product_hunt/models/posts/post.dart';
 import 'package:product_hunt/services/connectivity_service.dart';
 import 'package:product_hunt/services/pallete.dart';
@@ -90,29 +91,34 @@ class _HomeScreenState extends State<HomeScreen> {
       return Center(child: CircularProgressIndicator());
     }
 
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 8,
-      ),
-      child: ListView(
-        children: [
-          SizedBox(
-            height: 12,
-          ),
-          if (_homeBloc.filteredList.length == 0)
-            Center(
-              child: Text('No posts found'),
+    return RefreshAtom(
+      onRefresh: () async {
+        _homeBloc.add(LoadHome());
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 8,
+        ),
+        child: ListView(
+          children: [
+            SizedBox(
+              height: 12,
             ),
-          ..._homeBloc.filteredList.map((final Post? post) {
-            if (post != null) {
-              return _postTile(post);
-            }
-            return SizedBox.shrink();
-          }).toList(),
-          SizedBox(
-            height: 12,
-          ),
-        ],
+            if (_homeBloc.filteredList.length == 0)
+              Center(
+                child: Text('No posts found'),
+              ),
+            ..._homeBloc.filteredList.map((final Post? post) {
+              if (post != null) {
+                return _postTile(post);
+              }
+              return SizedBox.shrink();
+            }).toList(),
+            SizedBox(
+              height: 12,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -133,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: post.user?.imageUrl != null && ConnectivityService.instance.isConnected
+                leading: post.user?.imageUrl != null && ConnectivityService.instance.status
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(50.0),
                         child: Image.network(post.user!.imageUrl!),
@@ -160,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 8,
               ),
-              if (post.imageUrl != null && ConnectivityService.instance.isConnected)
+              if (post.imageUrl != null && ConnectivityService.instance.status)
                 Image.network(
                   post.imageUrl!,
                   fit: BoxFit.fitWidth,
